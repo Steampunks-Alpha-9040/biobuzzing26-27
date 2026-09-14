@@ -1,12 +1,18 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
+import org.firstinspires.ftc.teamcode.subsystems.Drivebase;
+
 public class ExampleOpMode extends BaseOpMode {
 
-    {
-        addComponents(
+    private Drivebase drivebase;
 
-        );
+    public ExampleOpMode(){
+        super();
+        drivebase = Drivebase.getInstance();
+
+
     }
+
 
 
     @Override public void onInit() { }

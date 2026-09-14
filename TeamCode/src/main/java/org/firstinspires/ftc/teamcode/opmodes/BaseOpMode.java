@@ -1,20 +1,14 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
-import dev.nextftc.extensions.fateweaver.FateComponent;
-import dev.nextftc.ftc.NextFTCOpMode;
+import dev.nextftc.robot.opmode.NextOpMode;
 
-public abstract class BaseOpMode extends NextFTCOpMode {
-    {
-        addComponents(
-                getLogger()
-        );
-    }
+public abstract class BaseOpMode extends NextOpMode {
     public BaseOpMode(){
         super();
     }
     public FateComponent getLogger(){
         return FateComponent.INSTANCE;
     }
+    public BulkReadComponent getBulkRead() {return BulkReadComponent.INSTANCE;}
 }
