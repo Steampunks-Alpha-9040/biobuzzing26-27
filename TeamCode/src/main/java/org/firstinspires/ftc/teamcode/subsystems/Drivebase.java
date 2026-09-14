@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.pedropathing.follower.Follower;
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
-import com.qualcomm.robotcore.hardware.DcMotorImplEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -26,20 +25,24 @@ public class Drivebase implements Mechanism {
 
     private Follower follower;
 
-    public Drivebase(){
-        FR = new NextMotor(Constants.FR);
-        FL = new NextMotor(Constants.FL);
-        BR = new NextMotor(Constants.BR);
-        BL = new NextMotor(Constants.BL);
+    private Drivebase(){
+        FR = new NextMotor(Constants.Drive.FR);
+        FL = new NextMotor(Constants.Drive.FL);
+        BR = new NextMotor(Constants.Drive.BR);
+        BL = new NextMotor(Constants.Drive.BL);
     }
 
     @Override
     public void periodic() {
-     MecanumKinematics   follower.update();
+        follower.update();
+    }
+
+    public void updateValues() {
+        odo.update();
     }
 
     public void drive(Gamepad joy){
-        DriveCommands.mecanumDriveFieldCentric(FL, FR, BL /*hehe*/, BR, joy, () -> odo.getHeading(AngleUnit.RADIANS), );
+        DriveCommands.mecanumDriveFieldCentric(FL, FR, BL /*hehe*/, BR, joy, () -> odo.getHeading(AngleUnit.RADIANS), getMecanumKinematics());
     }
 
     public static Drivebase getInstance(){
@@ -49,8 +52,8 @@ public class Drivebase implements Mechanism {
         return drivebase;
     }
 
-    private MecanumKinematics getKinematics(){
-        return new Me
+    private MecanumKinematics getMecanumKinematics(){
+        return new MecanumKinematics(1.1); //literally only value is to configure for strafing
     }
 
 
