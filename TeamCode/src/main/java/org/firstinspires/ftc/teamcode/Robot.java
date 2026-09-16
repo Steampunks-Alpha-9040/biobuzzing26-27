@@ -13,9 +13,9 @@ import dev.nextftc.robot.NextRobot;
 
 public class Robot implements NextRobot {
 
-    private Drivebase drivebase;
-    private Flywheel flywheel;
-    private Intake intake;
+    public Drivebase drivebase;
+    public Flywheel flywheel;
+    public Intake intake;
 
     public Robot() {
         drivebase = Drivebase.getInstance();
@@ -32,9 +32,9 @@ public class Robot implements NextRobot {
     @Override
     public Set<Mechanism> getMechanisms() {
         return Set.of(
-            drivebase,
-            flywheel,
-            intake
+//            drivebase,
+            flywheel
+//            intake
         );
     }
 }
