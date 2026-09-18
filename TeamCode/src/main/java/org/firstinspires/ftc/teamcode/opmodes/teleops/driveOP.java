@@ -14,12 +14,12 @@ public class driveOP extends NextOpMode {
     public driveOP(PipeBomb robot) {
         super(robot);
         this.robot = robot;
+        robot.init();
     }
 
     public void start(){
         CommandGamepad driver = new CommandGamepad(gamepad1);
         robot.startDrive(gamepad1).schedule();
-
     }
 
     @Override
