@@ -1,10 +1,14 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import com.pedropathing.ivy.Command;
+import com.qualcomm.robotcore.hardware.Gamepad;
+
 import org.firstinspires.ftc.teamcode.RobotConstants;
 
 import dev.nextftc.hardware.RobotController;
 import dev.nextftc.hardware.actuators.NextMotor;
 import dev.nextftc.robot.Mechanism;
+import dev.nextftc.robot.drive.DriveCommands;
 
 public class Drivebase implements Mechanism {
         public Drivebase(){}
@@ -22,7 +26,16 @@ public class Drivebase implements Mechanism {
                 frontRight.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.BRAKE);
                 backLeft.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.BRAKE);
                 backRight.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.BRAKE);
+        }
 
+        public Command startDrive(Gamepad gamepad1) {
+                return DriveCommands.mecanumDrive(
+                        this.frontLeft,
+                        this.frontRight,
+                        this.backLeft,
+                        this.backRight,
+                        gamepad1
+                );
         }
 
 

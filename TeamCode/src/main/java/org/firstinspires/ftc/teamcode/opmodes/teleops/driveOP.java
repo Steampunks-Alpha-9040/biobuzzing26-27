@@ -19,11 +19,15 @@ public class driveOP extends NextOpMode {
 
     public void start(){
         CommandGamepad driver = new CommandGamepad(gamepad1);
-        robot.startDrive(gamepad1).schedule();
+
+        robot.getDrivebase().startDrive(gamepad1).schedule();
+
+        driver.a().whileTrue(robot.getIntake().spinIntake());
     }
 
     @Override
     public void periodic() {
         Telemetry.log("Status", "Running");
+        telemetry.update();
     }
 }

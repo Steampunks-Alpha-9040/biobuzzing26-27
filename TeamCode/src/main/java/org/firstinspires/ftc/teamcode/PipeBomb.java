@@ -16,21 +16,20 @@ import dev.nextftc.robot.drive.DriveCommands;
 
 public class PipeBomb implements NextRobot {
 
-    public final Drivebase drivebase = new Drivebase();
-    public final Intake intake = new Intake();
+    private final Drivebase drivebase;
+    private final Intake intake;
 
     public PipeBomb(){
-
+        intake = new Intake();
+        drivebase = new Drivebase();
     }
 
-    public Command startDrive(Gamepad gamepad1) {
-        return DriveCommands.mecanumDrive(
-                drivebase.frontLeft,
-                drivebase.frontRight,
-                drivebase.backLeft,
-                drivebase.backRight,
-                gamepad1
-        );
+    public Drivebase getDrivebase(){
+        return drivebase;
+    }
+
+    public Intake getIntake(){
+        return intake;
     }
 
     public void init(){
