@@ -6,6 +6,7 @@ import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.subsystems.Drivebase;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 
 import java.util.Set;
 
@@ -16,10 +17,10 @@ import dev.nextftc.robot.drive.DriveCommands;
 public class PipeBomb implements NextRobot {
 
     public final Drivebase drivebase = new Drivebase();
+    public final Intake intake = new Intake();
 
-    public boolean hasInit;
     public PipeBomb(){
-        hasInit = false;
+
     }
 
     public Command startDrive(Gamepad gamepad1) {
@@ -34,6 +35,7 @@ public class PipeBomb implements NextRobot {
 
     public void init(){
         drivebase.init();
+        intake.init();
     }
 
     @NonNull
