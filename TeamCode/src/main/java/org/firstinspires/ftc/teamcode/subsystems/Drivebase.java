@@ -12,10 +12,10 @@ public class Drivebase implements Mechanism {
         public final NextMotor backRight =  new NextMotor(RobotController.controlHub(), 3);
 
         public void init(){
-                frontLeft.setDirection(NextMotor.Direction.FORWARD);
-                frontRight.setDirection(NextMotor.Direction.REVERSE);
-                backLeft.setDirection(NextMotor.Direction.FORWARD);
-                backRight.setDirection(NextMotor.Direction.REVERSE);
+                frontLeft.setDirection(NextMotor.Direction.REVERSE);
+                frontRight.setDirection(NextMotor.Direction.FORWARD);
+                backLeft.setDirection(NextMotor.Direction.REVERSE);
+                backRight.setDirection(NextMotor.Direction.FORWARD);
                 frontLeft.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.BRAKE);
                 frontRight.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.BRAKE);
                 backLeft.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.BRAKE);
