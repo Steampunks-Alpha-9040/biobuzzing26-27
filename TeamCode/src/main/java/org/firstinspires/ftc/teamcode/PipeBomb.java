@@ -22,19 +22,11 @@ public class PipeBomb implements NextRobot {
         hasInit = false;
     }
 
-    public Command startDrive(Gamepad gamepad1) {
-        return DriveCommands.mecanumDrive(
-                drivebase.frontLeft,
-                drivebase.frontRight,
-                drivebase.backLeft,
-                drivebase.backRight,
-                gamepad1
-        );
-    }
-
     public void init(){
         drivebase.init();
     }
+
+    public Command startDrive(Gamepad gamepad) {return (drivebase.startDrive(gamepad));}
 
     @NonNull
     @Override
