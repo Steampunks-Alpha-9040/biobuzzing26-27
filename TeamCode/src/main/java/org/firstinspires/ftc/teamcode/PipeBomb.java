@@ -6,6 +6,7 @@ import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.subsystems.Drivebase;
+import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
 import java.util.Set;
 
@@ -16,6 +17,7 @@ import dev.nextftc.robot.drive.DriveCommands;
 public class PipeBomb implements NextRobot {
 
     public final Drivebase drivebase = new Drivebase();
+    public final Transfer transfer = new Transfer();
 
     public boolean hasInit;
     public PipeBomb(){
@@ -24,9 +26,15 @@ public class PipeBomb implements NextRobot {
 
     public void init(){
         drivebase.init();
+        transfer.init();
+    }
+
+    public Transfer getTransfer(){
+        return transfer;
     }
 
     public Command startDrive(Gamepad gamepad) {return (drivebase.startDrive(gamepad));}
+
 
     @NonNull
     @Override
