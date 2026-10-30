@@ -27,4 +27,10 @@ public class Transfer implements Mechanism {
             transferRoller.setThrottle(-1);
         });
     }
+
+    public Command setTransferZeroPower(){
+        return Command.build().requiring(this).setStart(() ->{
+            transferRoller.setThrottle(0);
+        });
+    }
 }

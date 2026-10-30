@@ -6,6 +6,7 @@ import com.pedropathing.ivy.Command;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.subsystems.Drivebase;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
@@ -20,6 +21,7 @@ public class PipeBomb implements NextRobot {
     public final Drivebase drivebase = new Drivebase();
     public final Transfer transfer = new Transfer();
     public final Shooter shooter = new Shooter();
+    public final Intake intake = new Intake();
 
     public boolean hasInit;
     public PipeBomb(){
@@ -31,7 +33,7 @@ public class PipeBomb implements NextRobot {
         transfer.init();
         shooter.init();
     }
-
+    public Intake getIntake(){return intake;}
     public Transfer getTransfer(){return transfer;}
 
     public Shooter getShooter() {return shooter;}

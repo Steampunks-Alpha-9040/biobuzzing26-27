@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleops;
 
 import static com.pedropathing.api.Paths.line;
+import static com.pedropathing.ivy.groups.Groups.*;
 
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Scheduler;
 import com.pedropathing.math.Pose;
+import com.pedropathing.ivy.Command;
 import com.pedropathing.paths.Path;
 
 import org.firstinspires.ftc.teamcode.PipeBomb;
@@ -44,7 +46,9 @@ public class testTransferOp extends NextOpMode {
 
     public void start(){
         CommandGamepad driver = new CommandGamepad(gamepad1);
-        driver.a().whileTrue(robot.getTransfer().spinTransferForward());
+        driver.a().toggleOnTrue(robot.getTransfer().spinTransferForward()).toggleOnFalse(robot.getTransfer().setTransferZeroPower());
+        driver.a().whileTrue(robot.getShooter().shoot());
+        driver.b().toggleOnTrue(robot.getTransfer().spinTransferBackward()).toggleOnFalse(robot.getTransfer().setTransferZeroPower());
     }
 
     @Override

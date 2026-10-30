@@ -21,7 +21,7 @@ public class Shooter implements Mechanism {
         hood.enable();
         hood.setDirection(NextMotor.Direction.REVERSE);
         master.setDirection(NextMotor.Direction.FORWARD);
-        slave.setDirection(NextMotor.Direction.REVERSE);
+        slave.setDirection(NextMotor.Direction.FORWARD);
     }
 
     public Command shoot(){
