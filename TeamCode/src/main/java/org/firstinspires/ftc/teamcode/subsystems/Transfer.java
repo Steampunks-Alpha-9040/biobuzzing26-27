@@ -9,22 +9,22 @@ import dev.nextftc.robot.Mechanism;
 
 public class Transfer implements Mechanism {
     public Transfer(){}
-    public final NextCRServo transferRoller = new NextCRServo(RobotController.controlHub(), 3);
+    public final NextMotor transferRoller = new NextMotor(RobotController.controlHub(), 2);
 
     public void init(){
-        transferRoller.enable();
         transferRoller.setDirection(NextMotor.Direction.FORWARD);
+        transferRoller.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public Command spinTransferForward(){
         return Command.build().requiring(this).setStart(() -> {
-           transferRoller.setPower(1);
+           transferRoller.setThrottle(1);
         });
     }
 
     public Command spinTransferBackward(){
         return Command.build().requiring(this).setStart(() -> {
-            transferRoller.setPower(-1);
+            transferRoller.setThrottle(-1);
         });
     }
 }
