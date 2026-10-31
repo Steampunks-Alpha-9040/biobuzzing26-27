@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import androidx.annotation.NonNull;
+
 import com.pedropathing.ivy.Command;
 
 import dev.nextftc.hardware.RobotController;
@@ -19,14 +21,26 @@ public class Intake implements Mechanism {
         intakeServo2.enable();
     }
 
-    public Command spinIntakeForward(){
+    @NonNull
+    public Command getDefaultCommand() {
+        return stop();
+    }
+
+    public Command intake(){
         return Command.build().requiring(this).setStart(() -> {
             intakeServo1.setPower(1);
             intakeServo2.setPower(-1);
         });
     }
 
-    public Command spinIntakeBackward(){
+    public Command outtake(){
+        return Command.build().requiring(this).setStart(() -> {
+            intakeServo1.setPower(-1);
+            intakeServo2.setPower(1);
+        });
+    }
+
+    public Command stop(){
         return Command.build().requiring(this).setStart(() -> {
             intakeServo1.setPower(-1);
             intakeServo2.setPower(1);

@@ -48,24 +48,22 @@ public class meet0OP extends NextOpMode {
     public void start(){
         CommandGamepad driver = new CommandGamepad(gamepad1);
         robot.startDrive(gamepad1).schedule();
-        driver.a().onTrue(robot.getShooter().shoot());
-        driver.b().onTrue(robot.getShooter().stop());
+        driver.a().toggleOnTrue(robot.getShooter().shoot());
+
         driver.dpadRight().onTrue(robot.getShooter().deltaUp());
         driver.dpadLeft().onTrue(robot.getShooter().deltaDown());
 
-        driver.rightBumper().whileTrue(robot.getIntake().spinIntakeForward());
+        driver.rightBumper().whileTrue(robot.getIntake().intake());
 
         driver.rightTrigger().isBetween(0.5,1).onTrue(robot.getTransfer().spinTransferForward()).onFalse(robot.getTransfer().setTransferZeroPower());
 
-        driver.leftBumper().whileTrue(robot.getIntake().spinIntakeBackward());
+        driver.leftBumper().whileTrue(robot.getIntake().outtake());
 
         driver.leftTrigger().isBetween(0.5,1).onTrue(robot.getTransfer().spinTransferBackward()).onFalse(robot.getTransfer().setTransferZeroPower());
 
-        driver.dpadUp().onTrue(robot.getShooter().moveHoodForward());
+        driver.dpadUp().onTrue(robot.getStorage().spinStorageForward()).onFalse(robot.getStorage().getDefaultCommand());
 
-        driver.dpadDown().onTrue(robot.getShooter().moveHoodBackward());
-        driver.dpadRight().onTrue(robot.getStorage().spinStorageForward());
-        driver.dpadLeft().onTrue(robot.getStorage().spinStorageBackward());
+        driver.dpadDown().toggleOnTrue(robot.getStorage().spinStorageBackward()).onFalse(robot.getStorage().getDefaultCommand());
     }
 
     @Override

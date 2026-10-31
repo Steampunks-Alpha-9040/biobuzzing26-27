@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import static dev.nextftc.units.Units.RotationsPerMinute;
 
+import androidx.annotation.NonNull;
+
 import com.pedropathing.ivy.Command;
 
 import dev.nextftc.hardware.RobotController;
@@ -39,6 +41,11 @@ public class Shooter implements Mechanism {
         // both motors turn the flywheel the same way, so slave copies master's power
         slave.follow(master);
         hood.enable();
+    }
+
+    @NonNull
+    public Command getDefaultCommand() {
+        return stop();
     }
 
     public void setTargetVelocity(double velocity){
