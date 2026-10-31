@@ -1,66 +1,88 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static dev.nextftc.units.Units.RotationsPerMinute;
+
 import com.pedropathing.ivy.Command;
-import com.pedropathing.ivy.Command.*;
-
-import org.firstinspires.ftc.teamcode.Constants;
-import org.firstinspires.ftc.teamcode.util.PIDControl;
-import org.firstinspires.ftc.teamcode.util.Util;
-
-import java.util.Map;
 
 import dev.nextftc.hardware.RobotController;
 import dev.nextftc.hardware.actuators.NextCRServo;
 import dev.nextftc.hardware.actuators.NextMotor;
 import dev.nextftc.robot.Mechanism;
 
+// Ported from 13201 Hazmat's Launcher: uses NextMotor's built-in velocity control
+// (kS + kV feedforward), which NextMotor updates every loop on its own.
 public class Shooter implements Mechanism {
+    public final NextMotor master = new NextMotor(RobotController.expansionHub(), 2);
+    public final NextMotor slave = new NextMotor(RobotController.expansionHub(), 3);
+    public final NextCRServo hood = new NextCRServo(RobotController.controlHub(), 4);
 
-    public Shooter(){}
-    public final NextMotor master = new NextMotor(RobotController.controlHub(), 2);
-    public final NextMotor slave = new NextMotor(RobotController.controlHub(), 3);
-//    public final NextCRServo hood = new NextCRServo(RobotController.controlHub(), 4);
+    // velocities are in NextMotor's units (default anglePerCount = 1 rad), same as Hazmat's
+    private final double TOLERANCE = 25;
+    private final double DELTA = 50.0;
+    private final double POINT1 = 8000;
 
+    public double kV = 0.0000571;
+    public double kS = 0.16;
 
+    private double targetVelocity = 0.0;
 
-    private final PIDControl flywheelCalculator = new PIDControl(
-            Constants.FlywheelConstants.flywheel_kP,
-            Constants.FlywheelConstants.flywheel_kI,
-            Constants.FlywheelConstants.flywheel_kD,
-            Constants.FlywheelConstants.flywheel_kF,
-            Constants.FlywheelConstants.flywheelVelocityTolerance
-    );
+    public Shooter(){
+        master.getVelocityConstants().setKV(kV);
+        master.getVelocityConstants().setKS(kS);
+    }
 
     public void init(){
         master.setDirection(NextMotor.Direction.FORWARD);
         slave.setDirection(NextMotor.Direction.FORWARD);
+        master.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.FLOAT);
+        slave.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.FLOAT);
+        // both motors turn the flywheel the same way, so slave copies master's power
+        slave.follow(master);
+        hood.enable();
     }
 
-    public void periodic(){
-        double flywheelCurrentRPM = -master.getEncoderVelocity().getBaseUnitMagnitude()/ Util.GoBILDA.BARE.getCPR() * 60;
+    public void setTargetVelocity(double velocity){
+        targetVelocity = velocity;
+        master.setVelocitySetpoint(RotationsPerMinute.of(velocity));
+    }
 
-        double power = flywheelCalculator.calculate(flywheelCurrentRPM);
+    public double getCurrentVelocity(){
+        return master.getEncoderVelocity().into(RotationsPerMinute);
+    }
 
-        master.setThrottle(power);
-        slave.setThrottle(power);
+    public double getTargetVelocity(){
+        return targetVelocity;
+    }
+
+    public boolean isAtVelocity(){
+        return Math.abs(getCurrentVelocity() - targetVelocity) <= TOLERANCE;
     }
 
     public Command shoot(){
-        return instant(() -> flywheelCalculator.setSetpoint(5000));
-    }
-    public Command stop(){
-        return instant(() -> flywheelCalculator.setSetpoint(0));
+        return instant(() -> setTargetVelocity(POINT1));
     }
 
-//    public Command moveHoodForward(){
-//        return Command.build().requiring(this).setStart(() -> {
-//            hood.setPower(1);
-//        });
-//    }
-//
-//    public Command moveHoodBackward(){
-//        return Command.build().requiring(this).setStart(() -> {
-//            hood.setPower(-1);
-//        });
-//    }
+    public Command stop(){
+        return instant(() -> setTargetVelocity(0));
+    }
+
+    public Command deltaUp(){
+        return instant(() -> setTargetVelocity(targetVelocity + DELTA));
+    }
+
+    public Command deltaDown(){
+        return instant(() -> setTargetVelocity(targetVelocity - DELTA));
+    }
+
+   public Command moveHoodForward(){
+        return Command.build().requiring(this).setStart(() -> {
+            hood.setPower(1);
+        });
+    }
+
+    public Command moveHoodBackward(){
+        return Command.build().requiring(this).setStart(() -> {
+            hood.setPower(-1);
+        });
+    }
 }

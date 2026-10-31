@@ -1,4 +1,9 @@
 package org.firstinspires.ftc.teamcode;
+
+import com.pedropathing.math.Pose;
+
+import org.firstinspires.ftc.teamcode.util.Util;
+
 public class Constants {
 
     public enum Side{
@@ -19,7 +24,7 @@ public class Constants {
         public static final double yawScalar = 1;
         public static final double constantSigmaOdo = 0.1; //todo: tune this value.
 
-        public static Pose autoEndPos = new Pose();
+//        public static Pose autoEndPos = new Pose();
 
     }
 
@@ -29,7 +34,7 @@ public class Constants {
 
         public static final Util.GoBILDA flywheelMotor = Util.GoBILDA.BARE;
 
-        public static final double flywheelVelocityTolerance = 2.0; //10 rpm tolerance is probably good enough
+        public static final double flywheelVelocityTolerance = 10.0; //10 rpm tolerance is probably good enough
 
         public static final double flywheel_kP = 0.005;
         public static final double flywheel_kI = 0.0;
@@ -123,8 +128,8 @@ public class Constants {
         public static final double kDefaultYawDiffThreshold = 5.0;
         public static final double tagTargetTolerance = 0.5;
 
-        public static final Vector2d turretCenterToRobotCenter = new Vector2d(-(78.66)/1000,0);
-        public static final Vector2d cameraToTurretCenter = new Vector2d(-(37.448)/1000, (109.226)/1000);
+//        public static final Vector2d turretCenterToRobotCenter = new Vector2d(-(78.66)/1000,0);
+//        public static final Vector2d cameraToTurretCenter = new Vector2d(-(37.448)/1000, (109.226)/1000);
 
 
     }

@@ -13,6 +13,7 @@ import static com.pedropathing.ivy.groups.Groups.*;
 import org.firstinspires.ftc.teamcode.PipeBomb;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
+import dev.nextftc.hardware.RobotController;
 import dev.nextftc.robot.Telemetry;
 import dev.nextftc.robot.opmode.NextOpMode;
 import dev.nextftc.robot.opmode.NextTeleop;
@@ -47,15 +48,18 @@ public class meet0OP extends NextOpMode {
     public void start(){
         CommandGamepad driver = new CommandGamepad(gamepad1);
         robot.startDrive(gamepad1).schedule();
-        driver.a().toggleOnTrue(robot.getShooter().shoot()).toggleOnFalse(robot.getShooter().stop());
+        driver.a().onTrue(robot.getShooter().shoot());
+        driver.b().onTrue(robot.getShooter().stop());
+        driver.dpadRight().onTrue(robot.getShooter().deltaUp());
+        driver.dpadLeft().onTrue(robot.getShooter().deltaDown());
 
         driver.rightBumper().whileTrue(robot.getIntake().spinIntakeForward());
 
-        driver.rightTrigger().isBetween(0.5,1).onTrue(robot.getTransfer().spinTransferForward());
+        driver.rightTrigger().isBetween(0.5,1).onTrue(robot.getTransfer().spinTransferForward()).onFalse(robot.getTransfer().setTransferZeroPower());
 
         driver.leftBumper().whileTrue(robot.getIntake().spinIntakeBackward());
 
-        driver.leftTrigger().isBetween(0.5,1).onTrue(robot.getTransfer().spinTransferBackward());
+        driver.leftTrigger().isBetween(0.5,1).onTrue(robot.getTransfer().spinTransferBackward()).onFalse(robot.getTransfer().setTransferZeroPower());
 
         driver.dpadUp().onTrue(robot.getShooter().moveHoodForward());
 
@@ -65,5 +69,11 @@ public class meet0OP extends NextOpMode {
     @Override
     public void periodic() {
         Telemetry.log("Status", "Running");
+        Telemetry.log("Battery V", RobotController.getInputVoltage().getMagnitude());
+        Telemetry.log("Shooter target", robot.getShooter().getTargetVelocity());
+        Telemetry.log("Shooter velocity", robot.getShooter().getCurrentVelocity());
+        Telemetry.log("Shooter at speed", robot.getShooter().isAtVelocity());
+        Telemetry.log("Shooter master A", robot.getShooter().master.getCurrent().getMagnitude());
+        Telemetry.log("Shooter slave A", robot.getShooter().slave.getCurrent().getMagnitude());
     }
 }

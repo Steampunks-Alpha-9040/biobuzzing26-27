@@ -32,6 +32,7 @@ public class PipeBomb implements NextRobot {
         drivebase.init();
         transfer.init();
         shooter.init();
+        intake.init();
     }
     public Intake getIntake(){return intake;}
     public Transfer getTransfer(){return transfer;}

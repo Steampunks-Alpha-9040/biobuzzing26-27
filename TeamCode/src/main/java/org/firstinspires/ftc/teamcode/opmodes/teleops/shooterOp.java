@@ -46,8 +46,8 @@ public class shooterOp extends NextOpMode {
 
         CommandGamepad driver = new CommandGamepad(gamepad1);
         driver.a().whileTrue(robot.getShooter().shoot());
-        driver.b().whileTrue(robot.getShooter().moveHoodForward());
-        driver.x().whileTrue(robot.getShooter().moveHoodBackward());
+//        driver.b().whileTrue(robot.getShooter().moveHoodForward());
+//        driver.x().whileTrue(robot.getShooter().moveHoodBackward());
     }
 
     @Override
