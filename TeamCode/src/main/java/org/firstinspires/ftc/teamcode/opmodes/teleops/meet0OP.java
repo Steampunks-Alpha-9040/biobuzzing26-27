@@ -47,12 +47,18 @@ public class meet0OP extends NextOpMode {
     public void start(){
         CommandGamepad driver = new CommandGamepad(gamepad1);
         robot.startDrive(gamepad1).schedule();
-        driver.a().toggleOnTrue(robot.getShooter().shoot()).toggleOnFalse(robot.getShooter().noShoot());
+        driver.a().toggleOnTrue(robot.getShooter().shoot()).toggleOnFalse(robot.getShooter().stop());
+
         driver.rightBumper().whileTrue(robot.getIntake().spinIntakeForward());
+
         driver.rightTrigger().isBetween(0.5,1).onTrue(robot.getTransfer().spinTransferForward());
+
         driver.leftBumper().whileTrue(robot.getIntake().spinIntakeBackward());
+
         driver.leftTrigger().isBetween(0.5,1).onTrue(robot.getTransfer().spinTransferBackward());
+
         driver.dpadUp().onTrue(robot.getShooter().moveHoodForward());
+
         driver.dpadDown().onTrue(robot.getShooter().moveHoodBackward());
     }
 
