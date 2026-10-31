@@ -12,9 +12,9 @@ import dev.nextftc.robot.Mechanism;
 public class Shooter implements Mechanism {
 
     public Shooter(){}
-    public final NextMotor master = new NextMotor(RobotController.controlHub(), 0);
-    public final NextMotor slave = new NextMotor(RobotController.controlHub(), 1);
-    public final NextCRServo hood = new NextCRServo(RobotController.controlHub(), 4);
+    public final NextMotor master = new NextMotor(RobotController.expansionHub(), 2);
+    public final NextMotor slave = new NextMotor(RobotController.expansionHub(), 3);
+    public final NextCRServo hood = new NextCRServo(RobotController.controlHub(), 0);
 
 
     public void init(){
@@ -25,6 +25,13 @@ public class Shooter implements Mechanism {
     }
 
     public Command shoot(){
+        return Command.build().requiring(this).setStart(() -> {
+            master.setThrottle(1);
+            slave.setThrottle(1);
+        });
+    }
+
+    public Command noShoot(){
         return Command.build().requiring(this).setStart(() -> {
             master.setThrottle(1);
             slave.setThrottle(1);

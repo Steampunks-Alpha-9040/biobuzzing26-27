@@ -9,7 +9,7 @@ import dev.nextftc.robot.Mechanism;
 
 public class Intake implements Mechanism {
     public Intake() {}
-    public final NextCRServo intakeServo1 = new NextCRServo(RobotController.controlHub(),4);
+    public final NextCRServo intakeServo1 = new NextCRServo(RobotController.expansionHub(),0);
     public final NextCRServo intakeServo2 = new NextCRServo(RobotController.controlHub(),5);
 
     public void init(){

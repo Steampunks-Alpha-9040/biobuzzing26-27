@@ -44,8 +44,8 @@ public class intakeOp extends NextOpMode {
 
     public void start(){
         CommandGamepad driver = new CommandGamepad(gamepad1);
-        driver.a().whileTrue(robot.getIntake().spinIntakeForward());
-        driver.b().whileTrue(robot.getIntake().spinIntakeBackward());
+        driver.rightBumper().whileTrue(robot.getIntake().spinIntakeForward());
+        driver.leftBumper().whileTrue(robot.getIntake().spinIntakeBackward());
 
     }
 

@@ -10,10 +10,10 @@ import dev.nextftc.robot.drive.DriveCommands;
 
 public class Drivebase implements Mechanism {
         public Drivebase(){}
-        public final NextMotor frontLeft = new NextMotor(RobotController.controlHub(), 0);
-        public final NextMotor frontRight = new NextMotor(RobotController.controlHub(), 1);
-        public final NextMotor backLeft = new NextMotor(RobotController.controlHub(), 2);
-        public final NextMotor backRight =  new NextMotor(RobotController.controlHub(), 3);
+        public final NextMotor frontLeft = new NextMotor(RobotController.expansionHub(), 0);
+        public final NextMotor frontRight = new NextMotor(RobotController.controlHub(), 0);
+        public final NextMotor backLeft = new NextMotor(RobotController.expansionHub(), 1);
+        public final NextMotor backRight =  new NextMotor(RobotController.controlHub(), 1);
 
         public void init(){
                 frontLeft.setDirection(NextMotor.Direction.REVERSE);
