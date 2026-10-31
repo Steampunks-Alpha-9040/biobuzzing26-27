@@ -64,6 +64,8 @@ public class meet0OP extends NextOpMode {
         driver.dpadUp().onTrue(robot.getShooter().moveHoodForward());
 
         driver.dpadDown().onTrue(robot.getShooter().moveHoodBackward());
+        driver.dpadRight().onTrue(robot.getStorage().spinStorageForward());
+        driver.dpadLeft().onTrue(robot.getStorage().spinStorageBackward());
     }
 
     @Override
