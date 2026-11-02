@@ -26,13 +26,11 @@ public class Storage implements Mechanism {
         rightStorageRoller.setDirection(NextMotor.Direction.FORWARD);
     }
     @NonNull
+    @Override
     public Command getDefaultCommand() {
-        return instant(() -> {
-//            intakeRoller.setPower(0);
-//            leftStorageRoller.setPower(0);
-//            rightStorageRoller.setPower(0);
-        });
+        return stop();
     }
+    
 
     public Command spinStorageForward(){
         return Command.build().requiring(this).setStart(() -> {
@@ -47,6 +45,14 @@ public class Storage implements Mechanism {
             intakeRoller.setPower(-1);
             leftStorageRoller.setPower(-1);
             rightStorageRoller.setPower(-1);
+        });
+    }
+
+    public Command stop(){
+        return Command.build().requiring(this).setStart(() ->{
+            intakeRoller.setPower(0);
+            leftStorageRoller.setPower(0);
+            rightStorageRoller.setPower(0);
         });
     }
 

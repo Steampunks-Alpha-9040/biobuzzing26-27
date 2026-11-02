@@ -16,6 +16,7 @@ import java.util.Set;
 import dev.nextftc.robot.Mechanism;
 import dev.nextftc.robot.NextRobot;
 import dev.nextftc.robot.drive.DriveCommands;
+import dev.nextftc.robot.opmode.SchedulerHook;
 
 public class PipeBomb implements NextRobot {
 
@@ -40,6 +41,9 @@ public class PipeBomb implements NextRobot {
     public Transfer getTransfer(){return transfer;}
     public Shooter getShooter() {return shooter;}
     public Storage getStorage(){return storage;}
+//    public Command getCurrentCommand(){
+//        return SchedulerHook
+//    }
 
     public Command startDrive(Gamepad gamepad) {return (drivebase.startDrive(gamepad));}
     @NonNull
