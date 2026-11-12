@@ -34,7 +34,8 @@ public class meet0OP extends NextOpMode {
         robot.init();
         CommandGamepad bombTechnician = new CommandGamepad(gamepad1);
 
-        bombTechnician.a().toggleOnTrue(robot.getIntake().intake());
+        bombTechnician.a().toggleOnTrue(robot.getShooter().shoot(5000));
+        bombTechnician.b().toggleOnTrue(robot.getIntake().intake());
     }
 
     @Override
@@ -42,5 +43,11 @@ public class meet0OP extends NextOpMode {
         Telemetry.log("Status", "Running");
         Telemetry.log("Battery V", RobotController.getInputVoltage().getMagnitude());
         Telemetry.log("is active", "false");
+        Telemetry.log("Shooter Target RPM: ",
+                robot.getShooter().getTargetRPM()
+        );
+        Telemetry.log("Shooter Current RPM: ",
+                robot.getShooter().getCurrentRPM()
+        );
     }
 }

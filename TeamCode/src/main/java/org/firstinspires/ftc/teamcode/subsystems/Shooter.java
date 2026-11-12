@@ -25,12 +25,6 @@ public class Shooter implements Mechanism {
 
     // velocities are in NextMotor's units (default anglePerCount = 1 rad), same as Hazmat's
     private final double tolerance_RPM = 25;
-    private final double DELTA = 50.0;
-    private final double POINT1 = 5500;
-
-
-
-
     private double targetRPM = 0;
 
     public Shooter(){
@@ -45,13 +39,13 @@ public class Shooter implements Mechanism {
 
         master.setAnglePerCount(Rotations.of((1.0 / BARE.getCPR()))); // i think this is right??
 
+        master.getVelocityConstants().setKP(0.0);
+        master.getVelocityConstants().setKI(0.0);
+        master.getVelocityConstants().setKD(0.0);
+        master.getVelocityConstants().setKS(0.0);
+
         slave.follow(master);
         hood.enable();
-    }
-
-    public void periodic(){
-        Telemetry.log("Shooter/targetRPM", getTargetRPM());
-        Telemetry.log("Shooter/actualRPM", getCurrentRPM());
     }
 
     @NonNull
@@ -76,11 +70,12 @@ public class Shooter implements Mechanism {
         return Util.isNear(targetRPM, getCurrentRPM(), tolerance_RPM);
     }
 
-    public Command shoot(){
-        return instant(() -> {
-            setTargetRPM(POINT1);
-            Telemetry.log("is active", "true");
-        });
+    public Command shoot(double rpm){
+        return Command.build().setStart(() -> {
+            setTargetRPM(rpm);
+        }).setEnd(endCondition -> {
+            setTargetRPM(0);
+        }).requiring(this);
     }
 
     public Command stop(){

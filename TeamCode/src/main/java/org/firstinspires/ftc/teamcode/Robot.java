@@ -13,8 +13,10 @@ import org.firstinspires.ftc.teamcode.subsystems.Transfer;
 
 import java.util.Set;
 
+import dev.nextftc.hardware.RobotController;
 import dev.nextftc.robot.Mechanism;
 import dev.nextftc.robot.NextRobot;
+import dev.nextftc.robot.Telemetry;
 
 public class Robot implements NextRobot {
 
@@ -25,7 +27,6 @@ public class Robot implements NextRobot {
     public final Storage storage = new Storage();
     public boolean hasInit;
     public Robot(){
-        hasInit = false;
     }
 
     public void init(){
@@ -49,6 +50,8 @@ public class Robot implements NextRobot {
     public Set<Mechanism> getMechanisms() {
         return Set.of(drivebase);
     }
-    public void periodic() {}
+//    public void periodic() {
+//
+//    }
 
 }

@@ -45,7 +45,7 @@ public class testTransferOp extends NextOpMode {
     public void start(){
         CommandGamepad driver = new CommandGamepad(gamepad1);
         driver.a().toggleOnTrue(robot.getTransfer().spinTransferForward()).toggleOnFalse(robot.getTransfer().setTransferZeroPower());
-        driver.a().whileTrue(robot.getShooter().shoot());
+        driver.a().whileTrue(robot.getShooter().shoot(5000));
         driver.b().toggleOnTrue(robot.getTransfer().spinTransferBackward()).toggleOnFalse(robot.getTransfer().setTransferZeroPower());
     }
 
