@@ -1,15 +1,20 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import static org.firstinspires.ftc.teamcode.util.Util.GoBILDA.BARE;
+import static dev.nextftc.units.Units.Rotations;
 import static dev.nextftc.units.Units.RotationsPerMinute;
 
 import androidx.annotation.NonNull;
 
 import com.pedropathing.ivy.Command;
 
+import org.firstinspires.ftc.teamcode.util.Util;
+
 import dev.nextftc.hardware.RobotController;
 import dev.nextftc.hardware.actuators.NextCRServo;
 import dev.nextftc.hardware.actuators.NextMotor;
 import dev.nextftc.robot.Mechanism;
+import dev.nextftc.robot.Telemetry;
 
 // Ported from 13201 Hazmat's Launcher: uses NextMotor's built-in velocity control
 // (kS + kV feedforward), which NextMotor updates every loop on its own.
@@ -19,18 +24,17 @@ public class Shooter implements Mechanism {
     public final NextCRServo hood = new NextCRServo(RobotController.controlHub(), 4);
 
     // velocities are in NextMotor's units (default anglePerCount = 1 rad), same as Hazmat's
-    private final double TOLERANCE = 25;
+    private final double tolerance_RPM = 25;
     private final double DELTA = 50.0;
-    private final double POINT1 = 8000;
+    private final double POINT1 = 5500;
 
-    public double kV = 0.0000571;
-    public double kS = 0.16;
 
-    private double targetVelocity = 0.0;
+
+
+    private double targetRPM = 0;
 
     public Shooter(){
-        master.getVelocityConstants().setKV(kV);
-        master.getVelocityConstants().setKS(kS);
+
     }
 
     public void init(){
@@ -38,47 +42,49 @@ public class Shooter implements Mechanism {
         slave.setDirection(NextMotor.Direction.FORWARD);
         master.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.FLOAT);
         slave.setZeroPowerBehavior(NextMotor.ZeroPowerBehavior.FLOAT);
-        // both motors turn the flywheel the same way, so slave copies master's power
+
+        master.setAnglePerCount(Rotations.of((1.0 / BARE.getCPR()))); // i think this is right??
+
         slave.follow(master);
         hood.enable();
     }
 
-    @NonNull
-    public Command getDefaultCommand() {
-        return stop();
+    public void periodic(){
+        Telemetry.log("Shooter/targetRPM", getTargetRPM());
+        Telemetry.log("Shooter/actualRPM", getCurrentRPM());
     }
 
-    public void setTargetVelocity(double velocity){
-        targetVelocity = velocity;
+    @NonNull
+    public Command getDefaultCommand() {
+        return infinite(() -> setTargetRPM(0));
+    }
+
+    public void setTargetRPM(double velocity){
+        targetRPM = velocity;
         master.setVelocitySetpoint(RotationsPerMinute.of(velocity));
     }
 
-    public double getCurrentVelocity(){
+    public double getCurrentRPM(){
         return master.getEncoderVelocity().into(RotationsPerMinute);
     }
 
-    public double getTargetVelocity(){
-        return targetVelocity;
+    public double getTargetRPM(){
+        return targetRPM;
     }
 
     public boolean isAtVelocity(){
-        return Math.abs(getCurrentVelocity() - targetVelocity) <= TOLERANCE;
+        return Util.isNear(targetRPM, getCurrentRPM(), tolerance_RPM);
     }
 
     public Command shoot(){
-        return instant(() -> setTargetVelocity(POINT1));
+        return instant(() -> {
+            setTargetRPM(POINT1);
+            Telemetry.log("is active", "true");
+        });
     }
 
     public Command stop(){
-        return instant(() -> setTargetVelocity(0));
-    }
-
-    public Command deltaUp(){
-        return instant(() -> setTargetVelocity(targetVelocity + DELTA));
-    }
-
-    public Command deltaDown(){
-        return instant(() -> setTargetVelocity(targetVelocity - DELTA));
+        return instant(() -> setTargetRPM(0));
     }
 
    public Command moveHoodForward(){

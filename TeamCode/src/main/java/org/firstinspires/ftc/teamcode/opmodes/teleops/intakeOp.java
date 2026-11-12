@@ -8,7 +8,7 @@ import com.pedropathing.ivy.Scheduler;
 import com.pedropathing.math.Pose;
 import com.pedropathing.paths.Path;
 
-import org.firstinspires.ftc.teamcode.PipeBomb;
+import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 import dev.nextftc.robot.Telemetry;
@@ -18,7 +18,7 @@ import dev.nextftc.robot.triggers.CommandGamepad;
 
 @NextTeleop(name = "Test Intake")
 public class intakeOp extends NextOpMode {
-    private PipeBomb robot;
+    private Robot robot;
     private Follower follower;
     private final PoseFactory p = PoseFactory.degrees();
     private final Pose startPose = p.of(24, 24, 0);
@@ -36,7 +36,7 @@ public class intakeOp extends NextOpMode {
         follower = Constants.create(hardwareMap);
         follower.setPose(startPose);
     }
-    public intakeOp(PipeBomb robot) {
+    public intakeOp(Robot robot) {
         super(robot);
         this.robot = robot;
         robot.init();

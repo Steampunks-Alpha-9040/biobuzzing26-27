@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import androidx.annotation.NonNull;
 
 import com.pedropathing.ivy.Command;
+import com.pedropathing.ivy.behaviors.EndCondition;
 
 import dev.nextftc.hardware.RobotController;
 import dev.nextftc.hardware.actuators.NextCRServo;
@@ -21,30 +22,25 @@ public class Intake implements Mechanism {
         intakeServo2.enable();
     }
 
-    @NonNull
-    public Command getDefaultCommand() {
-        return stop();
-    }
-
     public Command intake(){
-        return Command.build().requiring(this).setStart(() -> {
+        return Command.build().setStart(() -> {
             intakeServo1.setPower(1);
             intakeServo2.setPower(-1);
-        });
+        }).setEnd(endCondition -> {
+            intakeServo1.setPower(0);
+            intakeServo2.setPower(0);
+        }).requiring(this);
     }
 
     public Command outtake(){
-        return Command.build().requiring(this).setStart(() -> {
+        return Command.build().setStart(() -> {
             intakeServo1.setPower(-1);
             intakeServo2.setPower(1);
-        });
+        }).setEnd(endCondition -> {
+            intakeServo1.setPower(0);
+            intakeServo2.setPower(0);
+        }).requiring(this);
     }
 
-    public Command stop(){
-        return Command.build().requiring(this).setStart(() -> {
-            intakeServo1.setPower(-1);
-            intakeServo2.setPower(1);
-        });
-    }
 
 }

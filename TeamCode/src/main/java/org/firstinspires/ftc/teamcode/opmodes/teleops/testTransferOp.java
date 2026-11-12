@@ -1,16 +1,14 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleops;
 
 import static com.pedropathing.api.Paths.line;
-import static com.pedropathing.ivy.groups.Groups.*;
 
 import com.pedropathing.api.PoseFactory;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Scheduler;
 import com.pedropathing.math.Pose;
-import com.pedropathing.ivy.Command;
 import com.pedropathing.paths.Path;
 
-import org.firstinspires.ftc.teamcode.PipeBomb;
+import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.pedro.Constants;
 
 import dev.nextftc.robot.Telemetry;
@@ -20,7 +18,7 @@ import dev.nextftc.robot.triggers.CommandGamepad;
 
 @NextTeleop(name = "Test Transfer")
 public class testTransferOp extends NextOpMode {
-    private PipeBomb robot;
+    private Robot robot;
     private Follower follower;
     private final PoseFactory p = PoseFactory.degrees();
     private final Pose startPose = p.of(24, 24, 0);
@@ -38,7 +36,7 @@ public class testTransferOp extends NextOpMode {
         follower = Constants.create(hardwareMap);
         follower.setPose(startPose);
     }
-    public testTransferOp(PipeBomb robot) {
+    public testTransferOp(Robot robot) {
         super(robot);
         this.robot = robot;
         robot.init();

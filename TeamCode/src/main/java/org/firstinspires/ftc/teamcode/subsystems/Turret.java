@@ -24,6 +24,9 @@ public class Turret implements Mechanism {
         return Command.build().requiring(this).setStart(() -> {
             turretServo1.setPower(1);
             turretServo2.setPower(1);
+        }).setEnd(endCondition -> {
+           turretServo1.setPower(0);
+           turretServo2.setPower(0);
         });
     }
 
@@ -31,6 +34,9 @@ public class Turret implements Mechanism {
         return Command.build().requiring(this).setStart(() -> {
             turretServo1.setPower(1);
             turretServo2.setPower(1);
+        }).setEnd(endCondition -> {
+            turretServo1.setPower(0);
+            turretServo2.setPower(0);
         });
     }
 

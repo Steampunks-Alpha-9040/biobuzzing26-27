@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes.teleops;
 
-import org.firstinspires.ftc.teamcode.PipeBomb;
+import org.firstinspires.ftc.teamcode.Robot;
 
 import dev.nextftc.robot.Telemetry;
 import dev.nextftc.robot.opmode.NextOpMode;
@@ -19,7 +19,7 @@ import com.pedropathing.ivy.Scheduler;
 
 @NextTeleop(name = "My Teleop")
 public class driveOP extends NextOpMode {
-    private PipeBomb robot;
+    private Robot robot;
     private Follower follower;
     private final PoseFactory p = PoseFactory.degrees();
     private final Pose startPose = p.of(24, 24, 0);
@@ -37,7 +37,7 @@ public class driveOP extends NextOpMode {
         follower = Constants.create(hardwareMap);
         follower.setPose(startPose);
     }
-    public driveOP(PipeBomb robot) {
+    public driveOP(Robot robot) {
         super(robot);
         this.robot = robot;
         robot.init();

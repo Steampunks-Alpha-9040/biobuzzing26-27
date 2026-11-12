@@ -15,10 +15,8 @@ import java.util.Set;
 
 import dev.nextftc.robot.Mechanism;
 import dev.nextftc.robot.NextRobot;
-import dev.nextftc.robot.drive.DriveCommands;
-import dev.nextftc.robot.opmode.SchedulerHook;
 
-public class PipeBomb implements NextRobot {
+public class Robot implements NextRobot {
 
     public final Drivebase drivebase = new Drivebase();
     public final Transfer transfer = new Transfer();
@@ -26,7 +24,7 @@ public class PipeBomb implements NextRobot {
     public final Intake intake = new Intake();
     public final Storage storage = new Storage();
     public boolean hasInit;
-    public PipeBomb(){
+    public Robot(){
         hasInit = false;
     }
 
